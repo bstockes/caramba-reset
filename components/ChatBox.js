@@ -1,33 +1,31 @@
-
 import { useState } from 'react';
-import styles from '../styles/ChatBox.module.css';
 
 export default function ChatBox() {
   const [messages, setMessages] = useState([
-    { sender: 'carly', text: 'Hi! I\'m Carly. How can I help you today?' }
+    { from:'carly', text:'Hi! I\'m Carly. How can I help?' }
   ]);
-  const [input, setInput] = useState('');
+  const [input,setInput] = useState('');
 
   const send = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { sender: 'user', text: input }]);
+    if(!input.trim()) return;
+    setMessages([...messages,{from:'user',text:input}]);
     setInput('');
-    setTimeout(() => {
-      setMessages(prev => [...prev, { sender: 'carly', text: 'Here\'s a mock answer to your question.' }]);
-    }, 800);
+    setTimeout(()=>{
+      setMessages(m => [...m,{from:'carly',text:'Mock answer coming soon!'}]);
+    },800);
   };
 
   return (
-    <div className={styles.chatbox}>
-      <div className={styles.messages}>
-        {messages.map((m, i) => (
-          <div key={i} className={m.sender==='user'?styles.user:styles.carly}>{m.text}</div>
+    <div style={{ marginTop:'1rem' }}>
+      <div style={{ maxHeight:200, overflowY:'auto', background:'#f8f8f8', padding:8, borderRadius:8 }}>
+        {messages.map((m,i)=>(
+          <div key={i} style={{ textAlign:m.from==='user'?'right':'left', margin:'4px 0' }}>
+            <span style={{ background:m.from==='user'?'#dcf8c6':'#eee', padding:'6px 10px', borderRadius:6 }}>{m.text}</span>
+          </div>
         ))}
       </div>
-      <div className={styles.inputRow}>
-        <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Type message..." />
-        <button onClick={send}>Send</button>
-      </div>
+      <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()} placeholder="Your question..." style={{ width:'70%', padding:6, marginTop:6 }} />
+      <button onClick={send} style={{ marginLeft:6 }}>Send</button>
     </div>
   );
 }
