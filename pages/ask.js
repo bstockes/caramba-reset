@@ -8,11 +8,11 @@ export default function AskPage() {
   const [scanMode, setScanMode] = useState(null);
   const [partInfo, setPartInfo] = useState(null);
   const [messages, setMessages] = useState([
-    { from: 'carly', text: 'Hi! I'm Carly 👋 — how can I help you with your vehicle today?' }
+    { from: "carly", text: "Hi! I'm Carly 👋 — how can I help you with your vehicle today?" }
   ]);
   const [input, setInput] = useState('');
 
-  const handleCapture = (imageData) => {
+  const handleCapture = () => {
     setShowCamera(false);
     if (scanMode === 'barcode') {
       setPartInfo({
@@ -42,14 +42,13 @@ export default function AskPage() {
   const sendMessage = () => {
     if (!input.trim()) return;
     setMessages([...messages, { from: 'user', text: input }]);
-    // Mock Carly reply
+    setInput('');
     setTimeout(() => {
       setMessages(prev => [...prev, {
         from: 'carly',
         text: 'Thanks for your question! Try checking your coolant level or AC compressor.'
       }]);
     }, 1000);
-    setInput('');
   };
 
   return (
