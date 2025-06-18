@@ -1,7 +1,8 @@
+
 import { ThemeProvider } from '../components/ThemeProvider';
+import NavBar from '../components/NavBar';
 import '../styles/themes.css';
 import '../styles/globals.css';
-import NavBar from '../components/NavBar';
 
 export default function App({ Component, pageProps }) {
   return (

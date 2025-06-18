@@ -1,23 +1,12 @@
 
-import Head from 'next/head';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Caramba | AI Vehicle Assistant</title>
-      </Head>
-      <main style={{ fontFamily: 'Arial, sans-serif', padding: '2rem' }}>
-        <h1>🚗 Caramba</h1>
-        <p>Hello! I'm Carly, your AI-powered vehicle assistant.</p>
-        <ul>
-          <li>📸 Upload your VIN or part barcode</li>
-          <li>🧠 Ask Carly anything about your vehicle</li>
-          <li>📋 View your vehicle stats and upcoming maintenance</li>
-          <li>🛒 Find the right parts and suppliers</li>
-        </ul>
-        <p>This is a working prototype placeholder. UI features coming next!</p>
-      </main>
-    </>
+    <main style={{padding:'2rem'}}>
+      <h1>Welcome to Caramba 🚗</h1>
+      <p>Hello! I'm Carly, your AI vehicle assistant.</p>
+      <Link href="/ask"><button style={{padding:'0.5rem 1rem',background:'var(--accent)',color:'#fff',border:'none',borderRadius:'8px'}}>Ask Carly</button></Link>
+    </main>
   );
 }

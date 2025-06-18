@@ -1,47 +1,8 @@
 
-.chatbox {
-  max-width: 600px;
-  margin-top: 1rem;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
-}
-.messages {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 1rem;
-}
-.user {
-  text-align: right;
-  background: #f1f1f1;
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  border-radius: 12px;
-}
-.carly {
-  text-align: left;
-  background: #ffe5e5;
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  border-radius: 12px;
-}
-.inputRow {
-  display: flex;
-  gap: 0.5rem;
-}
-.inputRow input {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-.inputRow button {
-  padding: 0.5rem 1rem;
-  background: crimson;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+.chatbox{max-width:600px;margin-top:1rem;border:1px solid #ccc;border-radius:10px;padding:1rem;background:#fff;}
+.messages{max-height:300px;overflow-y:auto;margin-bottom:1rem;}
+.user{text-align:right;background:#f1f1f1;margin:0.5rem 0;padding:0.5rem;border-radius:8px;}
+.carly{text-align:left;background:#ffe5e5;margin:0.5rem 0;padding:0.5rem;border-radius:8px;}
+.inputRow{display:flex;gap:0.5rem;}
+.inputRow input{flex:1;border:1px solid #ccc;border-radius:6px;padding:0.5rem;}
+.inputRow button{background:crimson;border:none;color:#fff;border-radius:6px;padding:0.5rem 1rem;cursor:pointer;}

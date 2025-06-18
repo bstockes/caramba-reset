@@ -4,41 +4,29 @@ import styles from '../styles/ChatBox.module.css';
 
 export default function ChatBox() {
   const [messages, setMessages] = useState([
-    { sender: 'carly', text: 'Hi! I'm Carly. What would you like to know about your vehicle?' }
+    { sender: 'carly', text: 'Hi! I\'m Carly. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const send = () => {
     if (!input.trim()) return;
-    const newMessages = [...messages, { sender: 'user', text: input }];
-    setMessages(newMessages);
+    setMessages([...messages, { sender: 'user', text: input }]);
     setInput('');
-
-    // Mock Carly response
     setTimeout(() => {
-      setMessages(prev => [...prev, {
-        sender: 'carly',
-        text: 'Thanks for your question! I'm analyzing that now. (This is a mock response.)'
-      }]);
-    }, 1000);
+      setMessages(prev => [...prev, { sender: 'carly', text: 'Here\'s a mock answer to your question.' }]);
+    }, 800);
   };
 
   return (
     <div className={styles.chatbox}>
       <div className={styles.messages}>
-        {messages.map((msg, i) => (
-          <div key={i} className={msg.sender === 'user' ? styles.user : styles.carly}>
-            <p>{msg.text}</p>
-          </div>
+        {messages.map((m, i) => (
+          <div key={i} className={m.sender==='user'?styles.user:styles.carly}>{m.text}</div>
         ))}
       </div>
       <div className={styles.inputRow}>
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="Type your question..."
-        />
-        <button onClick={handleSend}>Send</button>
+        <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Type message..." />
+        <button onClick={send}>Send</button>
       </div>
     </div>
   );

@@ -1,0 +1,9 @@
+
+.toggle{
+  padding:0.3rem 0.6rem;
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  cursor:pointer;
+}

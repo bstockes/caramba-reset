@@ -1,14 +1,7 @@
-import ThemeToggle from './ThemeToggle';
 
-<div className={styles.links}>
-  <Link href="/">Home</Link>
-  <Link href="/ask">Ask Carly</Link>
-  <ThemeToggle />
-</div>
-
-// components/NavBar.js
 import Link from 'next/link';
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 import styles from '../styles/NavBar.module.css';
 
 export default function NavBar() {
@@ -22,10 +15,9 @@ export default function NavBar() {
           <Link href="/ask">Ask Carly</Link>
           <Link href="/garage">My Garage</Link>
           <Link href="/account">My Account</Link>
+          <ThemeToggle />
         </div>
-        <button className={styles.hamburger} onClick={() => setOpen(!open)}>
-          ☰
-        </button>
+        <button className={styles.hamburger} onClick={() => setOpen(!open)}>☰</button>
       </nav>
       {open && (
         <div className={styles.mobileMenu}>
@@ -33,6 +25,7 @@ export default function NavBar() {
           <Link href="/ask">Ask Carly</Link>
           <Link href="/garage">My Garage</Link>
           <Link href="/account">My Account</Link>
+          <ThemeToggle />
         </div>
       )}
     </>

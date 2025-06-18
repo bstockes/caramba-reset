@@ -1,32 +1,20 @@
 
-/* Root defaults */
-:root {
-  --bg: #ffffff;
-  --fg: #111111;
-  --accent: #D72638; /* redline default */
+:root{
+  --bg:#ffffff;
+  --fg:#222;
+  --accent:#d72638;
 }
-
-/* Precision Redline */
-[data-theme="redline"] {
-  --bg: #ffffff;
-  --fg: #111111;
-  --accent: #D72638;
+[data-theme="redline"]{
+  --bg:#ffffff;
+  --fg:#222;
+  --accent:#d72638;
 }
-
-/* Modern Torque */
-[data-theme="torque"] {
-  --bg: #F9FAFB;
-  --fg: #1E293B;
-  --accent: #14B8A6;
+[data-theme="torque"]{
+  --bg:#f9fafb;
+  --fg:#1e293b;
+  --accent:#14b8a6;
 }
-
-/* Apply variables */
-body {
-  background: var(--bg);
-  color: var(--fg);
-}
-
-button, .accent {
-  background: var(--accent);
-  color: #fff;
+body{
+  background:var(--bg);
+  color:var(--fg);
 }
