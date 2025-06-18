@@ -1,0 +1,1 @@
+// CameraModal.js placeholder - replace with full code
