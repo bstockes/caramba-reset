@@ -1,3 +1,11 @@
+import ThemeToggle from './ThemeToggle';
+
+<div className={styles.links}>
+  <Link href="/">Home</Link>
+  <Link href="/ask">Ask Carly</Link>
+  <ThemeToggle />
+</div>
+
 // components/NavBar.js
 import Link from 'next/link';
 import { useState } from 'react';
