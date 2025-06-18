@@ -1,0 +1,8 @@
+
+.card {
+  display:flex; gap:1rem; border:1px solid #ddd; border-radius:12px; margin:1rem 0; padding:1rem; background:#fff;
+}
+.photo {
+  width:120px; height:80px; object-fit:cover; border-radius:8px; background:#eee;
+}
+.info { flex:1; }
