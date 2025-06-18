@@ -1,18 +1,17 @@
+
 import { useState } from 'react';
 import BarcodeScanner from '../components/BarcodeScanner';
 import CameraCapture from '../components/CameraCapture';
+import SuggestedQuestions from '../components/SuggestedQuestions';
 
 export default function Ask() {
   const [messages, setMessages] = useState([
     { from: 'carly', text: "Hi! I'm Carly 👋 — how can I help you with your vehicle today?" }
   ]);
   const [input, setInput] = useState('');
-
-  // modal flags
   const [scanBarcode, setScanBarcode] = useState(false);
   const [scanPhoto, setScanPhoto] = useState(false);
 
-  /* ---------- Chat helpers ---------- */
   const addMessage = (from, text) =>
     setMessages(prev => [...prev, { from, text }]);
 
@@ -25,7 +24,6 @@ export default function Ask() {
     , 800);
   };
 
-  /* ---------- Barcode flow ---------- */
   const handleBarcode = code => {
     setScanBarcode(false);
     addMessage('user', '📦 (Barcode scanned)');
@@ -35,7 +33,6 @@ export default function Ask() {
     );
   };
 
-  /* ---------- Part-photo flow ---------- */
   const handlePhoto = imgData => {
     setScanPhoto(false);
     addMessage('user', '📸 (Part photo taken)');
@@ -45,11 +42,14 @@ export default function Ask() {
     );
   };
 
+  const handlePromptClick = (text) => {
+    setInput(text);
+    sendQuestion();
+  };
+
   return (
     <div style={{ padding: 20, maxWidth: 700, margin: '0 auto' }}>
       <h2>Ask Carly</h2>
-
-      {/* Chat transcript */}
       <div style={{ background: '#f8f8f8', padding: 12, borderRadius: 8, maxHeight: 220, overflowY: 'auto' }}>
         {messages.map((m, i) => (
           <div key={i} style={{ margin: '8px 0', textAlign: m.from === 'user' ? 'right' : 'left' }}>
@@ -65,7 +65,6 @@ export default function Ask() {
         ))}
       </div>
 
-      {/* Input row */}
       <div style={{ marginTop: 10 }}>
         <input
           value={input}
@@ -77,13 +76,13 @@ export default function Ask() {
         <button onClick={sendQuestion} style={{ marginLeft: 6 }}>Send</button>
       </div>
 
-      {/* Camera buttons */}
       <div style={{ marginTop: 16 }}>
         <button onClick={() => setScanBarcode(true)}>📦 Scan Barcode</button>
         <button onClick={() => setScanPhoto(true)} style={{ marginLeft: 10 }}>📸 Take Part Photo</button>
       </div>
 
-      {/* Modals */}
+      <SuggestedQuestions onSelect={handlePromptClick} />
+
       {scanBarcode && (
         <BarcodeScanner
           onScan={handleBarcode}
