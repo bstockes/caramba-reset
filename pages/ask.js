@@ -1,65 +1,100 @@
-
 import { useState } from 'react';
 import BarcodeScanner from '../components/BarcodeScanner';
+import CameraCapture from '../components/CameraCapture';
 
 export default function Ask() {
   const [messages, setMessages] = useState([
     { from: 'carly', text: "Hi! I'm Carly 👋 — how can I help you with your vehicle today?" }
   ]);
   const [input, setInput] = useState('');
-  const [scanning, setScanning] = useState(false);
 
-  const handleSend = () => {
+  // modal flags
+  const [scanBarcode, setScanBarcode] = useState(false);
+  const [scanPhoto, setScanPhoto] = useState(false);
+
+  /* ---------- Chat helpers ---------- */
+  const addMessage = (from, text) =>
+    setMessages(prev => [...prev, { from, text }]);
+
+  const sendQuestion = () => {
     if (!input.trim()) return;
-    const userMessage = { from: 'user', text: input };
-    const carlyReply = {
-      from: 'carly',
-      text: "Thanks for your question! I'm fetching some helpful info... (demo)"
-    };
-    setMessages([...messages, userMessage, carlyReply]);
+    addMessage('user', input);
     setInput('');
+    setTimeout(() =>
+      addMessage('carly', 'Thanks for your question! I will get back with info soon. (demo)')
+    , 800);
   };
 
-  const handleScan = () => {
-    setScanning(true);
+  /* ---------- Barcode flow ---------- */
+  const handleBarcode = code => {
+    setScanBarcode(false);
+    addMessage('user', '📦 (Barcode scanned)');
+    addMessage(
+      'carly',
+      `I found **Bosch Brake Pads** (Part #${code}).\n\nBuy:\n- AutoZone – $59.99\n- Amazon – $54.50`
+    );
   };
 
-  const handleBarcodeDetected = (code) => {
-    setScanning(false);
-    setMessages(prev => [
-      ...prev,
-      { from: 'user', text: '📦 Scanned part barcode...' },
-      {
-        from: 'carly',
-        text: `I found: Bosch Brake Pads (Part #${code})
-
-Available at:
-- [AutoZone](https://autozone.com)
-- [Amazon](https://amazon.com)`
-      }
-    ]);
+  /* ---------- Part-photo flow ---------- */
+  const handlePhoto = imgData => {
+    setScanPhoto(false);
+    addMessage('user', '📸 (Part photo taken)');
+    addMessage(
+      'carly',
+      `Looks like a **Cabin Air Filter** (Part #CAF-9876). Compatible with your 2021 VW Tiguan 🌟`
+    );
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, maxWidth: 700, margin: '0 auto' }}>
       <h2>Ask Carly</h2>
-      <div style={{ marginBottom: 10 }}>
-        {messages.map((msg, i) => (
-          <div key={i} style={{ margin: '10px 0', color: msg.from === 'carly' ? 'crimson' : 'black' }}>
-            <strong>{msg.from === 'carly' ? 'Carly' : 'You'}:</strong> {msg.text}
+
+      {/* Chat transcript */}
+      <div style={{ background: '#f8f8f8', padding: 12, borderRadius: 8, maxHeight: 220, overflowY: 'auto' }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ margin: '8px 0', textAlign: m.from === 'user' ? 'right' : 'left' }}>
+            <span style={{
+              background: m.from === 'user' ? '#dcf8c6' : '#eee',
+              padding: '6px 10px',
+              borderRadius: 6,
+              display: 'inline-block'
+            }}>
+              {m.text}
+            </span>
           </div>
         ))}
       </div>
-      <input
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        placeholder="Type your question..."
-        style={{ width: '70%', marginRight: 10 }}
-      />
-      <button onClick={handleSend}>Send</button>
-      <button onClick={handleScan} style={{ marginLeft: 10 }}>📦 Scan Barcode</button>
-      {scanning && (
-        <BarcodeScanner onScan={handleBarcodeDetected} onCancel={() => setScanning(false)} />
+
+      {/* Input row */}
+      <div style={{ marginTop: 10 }}>
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="Type your question…"
+          onKeyDown={e => e.key === 'Enter' && sendQuestion()}
+          style={{ width: '65%', padding: 6 }}
+        />
+        <button onClick={sendQuestion} style={{ marginLeft: 6 }}>Send</button>
+      </div>
+
+      {/* Camera buttons */}
+      <div style={{ marginTop: 16 }}>
+        <button onClick={() => setScanBarcode(true)}>📦 Scan Barcode</button>
+        <button onClick={() => setScanPhoto(true)} style={{ marginLeft: 10 }}>📸 Take Part Photo</button>
+      </div>
+
+      {/* Modals */}
+      {scanBarcode && (
+        <BarcodeScanner
+          onScan={handleBarcode}
+          onCancel={() => setScanBarcode(false)}
+        />
+      )}
+      {scanPhoto && (
+        <CameraCapture
+          onCapture={handlePhoto}
+          onCancel={() => setScanPhoto(false)}
+        />
       )}
     </div>
   );
