@@ -12,7 +12,7 @@ const mockUser = {
       oilType: "0W-20 Synthetic",
       oilInterval: 5000,
       tireSize: "235/55R18",
-      tirePressure: 35,
+      tirePressure: 35
     }
   ]
 };
@@ -34,7 +34,7 @@ export default function Garage() {
   useEffect(() => {
     const updatedGarage = mockUser.garage.map(v => ({
       ...v,
-      upcoming: calculateUpcoming(v),
+      upcoming: calculateUpcoming(v)
     }));
     setUser({ ...mockUser, garage: updatedGarage });
   }, []);
@@ -53,9 +53,9 @@ export default function Garage() {
           background: '#fafafa'
         }}>
           <h3>{v.year} {v.make} {v.model}</h3>
-          <p>Mileage: {v.mileage.toLocaleString()} mi</p>
-          <p>Oil: {v.oilType}, change every {v.oilInterval.toLocaleString()} mi</p>
-          <p>Tires: {v.tireSize} @ {v.tirePressure} PSI</p>
+          <p><strong>Mileage:</strong> {v.mileage.toLocaleString()} mi</p>
+          <p><strong>Oil:</strong> {v.oilType}, change every {v.oilInterval.toLocaleString()} mi</p>
+          <p><strong>Tires:</strong> {v.tireSize} @ {v.tirePressure} PSI</p>
           <h4>🔧 Upcoming Maintenance</h4>
           <ul>
             {v.upcoming.map((item, j) => <li key={j}>{item}</li>)}
