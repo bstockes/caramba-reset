@@ -1,8 +1,12 @@
+
+import Link from 'next/link';
+
 export default function Home() {
   return (
-    <div style={{ maxWidth: 600, margin: '0 auto', padding: 20, fontFamily: 'sans-serif' }}>
-      <h1>Welcome to Caramba</h1>
-      <p>This is the homepage. Navigate using the menu.</p>
-    </div>
+    <main style={{padding:'2rem'}}>
+      <h1>Welcome to Caramba 🚗</h1>
+      <p>Hello! I'm Carly, your AI vehicle assistant.</p>
+      <Link href="/ask"><button style={{padding:'0.5rem 1rem',background:'var(--accent)',color:'#fff',border:'none',borderRadius:'8px'}}>Ask Carly</button></Link>
+    </main>
   );
 }
