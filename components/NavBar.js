@@ -1,25 +1,32 @@
-
-import { useState } from 'react';
+// components/NavBar.js
 import Link from 'next/link';
+import { useState } from 'react';
 import styles from '../styles/NavBar.module.css';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
-
   return (
-    <header className={styles.header}>
-      <div className={styles.logo}>
-        <Link href="/">Caramba</Link>
-      </div>
-      <nav className={open ? styles.navOpen : styles.nav}>
-        <Link href="/" onClick={()=>setOpen(false)}>Home</Link>
-        <Link href="/ask" onClick={()=>setOpen(false)}>Ask Carly</Link>
-        <Link href="/garage" onClick={()=>setOpen(false)}>My Garage</Link>
-        <Link href="/account" onClick={()=>setOpen(false)}>My Account</Link>
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.brand}>Caramba</div>
+        <div className={styles.links}>
+          <Link href="/">Home</Link>
+          <Link href="/ask">Ask Carly</Link>
+          <Link href="/garage">My Garage</Link>
+          <Link href="/account">My Account</Link>
+        </div>
+        <button className={styles.hamburger} onClick={() => setOpen(!open)}>
+          ☰
+        </button>
       </nav>
-      <button className={styles.burger} onClick={()=>setOpen(!open)}>
-        ☰
-      </button>
-    </header>
+      {open && (
+        <div className={styles.mobileMenu}>
+          <Link href="/">Home</Link>
+          <Link href="/ask">Ask Carly</Link>
+          <Link href="/garage">My Garage</Link>
+          <Link href="/account">My Account</Link>
+        </div>
+      )}
+    </>
   );
 }
