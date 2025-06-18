@@ -30,6 +30,7 @@ function calculateUpcoming(vehicle) {
 
 export default function Garage() {
   const [user, setUser] = useState(null);
+  const [vinInput, setVinInput] = useState('');
 
   useEffect(() => {
     const updatedGarage = mockUser.garage.map(v => ({
@@ -39,11 +40,42 @@ export default function Garage() {
     setUser({ ...mockUser, garage: updatedGarage });
   }, []);
 
+  const handleAddVehicle = () => {
+    if (!vinInput.trim()) return;
+    const newVehicle = {
+      year: 2020,
+      make: "Honda",
+      model: "Civic",
+      mileage: 30000,
+      oilType: "5W-30 Synthetic",
+      oilInterval: 6000,
+      tireSize: "215/55R16",
+      tirePressure: 33,
+      upcoming: calculateUpcoming({ mileage: 30000, oilInterval: 6000 })
+    };
+    setUser(prev => ({
+      ...prev,
+      garage: [...prev.garage, newVehicle]
+    }));
+    setVinInput('');
+  };
+
   if (!user) return <p>Loading your garage…</p>;
 
   return (
     <div style={{ padding: 20 }}>
       <h2>My Garage</h2>
+      <div style={{ marginBottom: 20 }}>
+        <input
+          type="text"
+          placeholder="Enter VIN..."
+          value={vinInput}
+          onChange={e => setVinInput(e.target.value)}
+          style={{ padding: 6, width: '60%' }}
+        />
+        <button onClick={handleAddVehicle} style={{ marginLeft: 10 }}>Add Vehicle</button>
+      </div>
+
       {user.garage.map((v, i) => (
         <div key={i} style={{
           border: '1px solid #ddd',
