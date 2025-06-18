@@ -1,39 +1,53 @@
 
 import { useState } from 'react';
+import CameraCapture from './CameraCapture';
 import styles from '../styles/AddVehicleModal.module.css';
 
-export default function AddVehicleModal({ onClose, onSave }) {
+export default function AddVehicleModal({ onClose, onAdd }) {
   const [vin, setVin] = useState('');
-  const mockVehicle = {
-    year: 2021,
-    make: 'Volkswagen',
-    model: 'Tiguan',
-    mileage: 24500,
-    oilType: '0W-20',
-    oilInterval: 10000,
-    tireSize: '235/55R18',
-    tirePressure: 35,
-    upcoming: ['30,000 mi – Air filter', '40,000 mi – Brake inspection'],
-    img: '/placeholder-car.png'
-  };
+  const [showCamera, setShowCamera] = useState(false);
 
-  const handleSave = () => {
-    if (!vin.trim()) return;
-    onSave({ ...mockVehicle, vin });
+  const handleAdd = () => {
+    if (!vin) return;
+    const vehicle = {
+      year: 2021,
+      make: 'Volkswagen',
+      model: 'Tiguan',
+      mileage: 22500,
+      oilType: '0W-20',
+      oilInterval: 7500,
+      tireSize: '235/55R18',
+      tirePressure: 35,
+      upcoming: ['30,000 mi – Air filter', '40,000 mi – Brake inspection'],
+      img: '/placeholder-car.png',
+    };
+    onAdd(vehicle);
     onClose();
   };
 
+  const handleCapture = (imageData) => {
+    setShowCamera(false);
+    // Simulate VIN from image
+    setVin('3VV2B7AX9MM000000');
+  };
+
   return (
-    <div className={styles.backdrop}>
+    <>
+      {showCamera && (
+        <CameraCapture onCapture={handleCapture} onCancel={() => setShowCamera(false)} />
+      )}
       <div className={styles.modal}>
         <h2>Add Vehicle</h2>
-        <p>Enter VIN (mock decoder will add a demo Tiguan)</p>
-        <input value={vin} onChange={e => setVin(e.target.value)} placeholder="VIN" />
-        <div className={styles.actions}>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={onClose}>Cancel</button>
-        </div>
+        <input
+          type="text"
+          placeholder="Enter VIN"
+          value={vin}
+          onChange={(e) => setVin(e.target.value)}
+        />
+        <button onClick={() => setShowCamera(true)}>📷 Scan VIN with Camera</button>
+        <button onClick={handleAdd}>Add Vehicle</button>
+        <button onClick={onClose}>Cancel</button>
       </div>
-    </div>
+    </>
   );
 }
