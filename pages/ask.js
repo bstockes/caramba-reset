@@ -15,13 +15,27 @@ export default function Ask() {
   const addMessage = (from, text) =>
     setMessages(prev => [...prev, { from, text }]);
 
+  const smartAnswers = {
+    "what oil does my car take": "Your 2021 VW Tiguan takes **0W-20 full synthetic oil**. Change it every **5,000 miles**.",
+    "when is my next maintenance": "You’re due for an oil change at **50,000 mi** and tire rotation at **75,000 mi**.",
+    "why is my check engine light on": "This could be due to a loose gas cap, O2 sensor, or spark plug issue. Want help diagnosing?",
+    "what tire pressure should i use": "Factory specs recommend **35 PSI** for your tires.",
+    "where can i buy brake pads": "Here are a few options for your Tiguan:\n- AutoZone: $59.99\n- Amazon: $54.50\n- NAPA: $62.00",
+    "why is my car overheating": "Common causes include a low coolant level, radiator leak, or faulty thermostat.",
+    "can i schedule an oil change": "Sure! Just head to our **Schedule Service** tab or I can connect you with a local shop.",
+    "what’s causing my battery to drain": "If your car sits often, it may be a parasitic draw or aging battery. I recommend a battery test."
+  };
+
   const sendQuestion = () => {
     if (!input.trim()) return;
+    const q = input.toLowerCase().replace(/[?']/g, '').trim();
     addMessage('user', input);
     setInput('');
-    setTimeout(() =>
-      addMessage('carly', 'Thanks for your question! I will get back with info soon. (demo)')
-    , 800);
+    setTimeout(() => {
+      const match = Object.keys(smartAnswers).find(key => q.includes(key));
+      const reply = smartAnswers[match] || "Thanks for your question! I will get back with info soon. (demo)";
+      addMessage('carly', reply);
+    }, 800);
   };
 
   const handleBarcode = code => {
