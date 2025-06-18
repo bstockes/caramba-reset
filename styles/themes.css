@@ -1,12 +1,3 @@
-:root {
-  --bg:#ffffff;
-  --fg:#111111;
-  --accent:#d72638;
+body {
+  background: #f2f4f7;
 }
-[data-theme="torque"] {
-  --bg:#f9fafb;
-  --fg:#1e293b;
-  --accent:#14b8a6;
-}
-body { background:var(--bg); color:var(--fg); }
-button { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:6px 10px; }
